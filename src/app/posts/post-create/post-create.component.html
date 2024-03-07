@@ -1,17 +1,3 @@
-<!-- <mat-card>
-    <mat-form-field>
-        <mat-label for="">Title</mat-label>
-        <input matInput type="text" [(ngModel)]="enteredTitle">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Content</mat-label>
-        <textarea matInput rows="6" [(ngModel)]="enteredContent"></textarea>
-    </mat-form-field>
-    <div class="button-container">
-        <button mat-raised-button color="primary" (click)="onAddPost()">Save Post</button>
-    </div>
-</mat-card> -->
-
 <mat-card>
     <form class="form-container" (submit)="onAddPost(postForm)" #postForm="ngForm">
         <mat-form-field class="full-width">
@@ -28,18 +14,3 @@
         </div>
     </form>
 </mat-card>
-<!-- <mat-card>
-    <div class="form-container">
-        <form (submit)="onAddPost()" #postForm="ngForm">
-            <mat-form-field class="full-width">
-                <input matInput placeholder="Title" type="text" name="title" ngModel>
-            </mat-form-field>
-            <mat-form-field class="full-width">
-                <textarea matInput placeholder="Content" rows="6" name="content" ngModel></textarea>
-            </mat-form-field>
-            <div class="button-container">
-                <button mat-raised-button color="primary" type="submit">Save Post</button>
-            </div>
-        </form>
-    </div>
-</mat-card> -->

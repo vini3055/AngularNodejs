@@ -7,11 +7,9 @@ export class PostService {
 
     getPosts() {
         return this.Posts
-        // return this.Posts;
     }
     addPosts(title: string, content: string) {
         const post: Post = { title: title, content: content }
         this.Posts.push(post);
-
     }
 }
