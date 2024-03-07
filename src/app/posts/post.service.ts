@@ -9,7 +9,7 @@ export class PostService {
     private postUpdated = new Subject<Post[]>();
 
     getPosts() {
-        return this.Posts
+        return [...this.Posts]
     }
 
     getPostUpdateListner() {
