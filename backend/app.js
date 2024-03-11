@@ -1,11 +1,18 @@
 const express =require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const Post = require('./models/posts')
 
 const app = express();
-
+mongoose.connect("mongodb+srv://kvineethvini94:check121Cluster@cluster0.f3kzkay.mongodb.net/node-angular?retryWrites=true&w=majority&appName=Cluster0").then(()=>{
+  console.log('Connected MongoDb successfuly')
+}).catch(()=>{
+  console.log('mongodb is not connected')
+})
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use((req,res,next)=>{
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -14,49 +21,34 @@ app.use((req,res,next)=>{
     next();
 })
 
-app.post("/api/posts", (req, res, next) => {
-  const post = req.body;
-  console.log(post);
-  res.status(201).json({
-    message: 'Post added successfully'
-  });
-});
+
 
 app.get('/api/posts',(req, res, next)=>{
-    const post =[
-        {
-          "id": 1,
-          "title": "Introduction to JSON",
-          "content": "JSON (JavaScript Object Notation) is a lightweight data-interchange format."
-        },
-        {
-          "id": 2,
-          "title": "Benefits of JSON",
-          "content": "JSON is easy for humans to read and write. It is also easy for machines to parse and generate."
-        },
-        {
-          "id": 3,
-          "title": "JSON Syntax",
-          "content": "JSON syntax is based on JavaScript object notation syntax, but it is not tied to JavaScript exclusively."
-        },
-        {
-          "id": 4,
-          "title": "Usage of JSON",
-          "content": "JSON is commonly used for transmitting data in web applications (e.g., sending data from the server to the client, or vice versa)."
-        },
-        {
-          "id": 5,
-          "title": "Parsing JSON",
-          "content": "In most programming languages, libraries exist to parse JSON into native data structures."
-        }
-      ]
-      
-    res.status(200).json({
-        message:'post successful',
-        post
-    })
-    next();
+
+      Post.find().then((document)=>{
+        console.log('values from db ', document)
+        res.status(200).json({
+          message:'post successful',
+         post:document
+      })
+
+      })
+  
+    // next();
 })
 
+// posting the content for the api
+app.post("/api/posts", (req, res, next) => {
+    // const post = req.body;
+    const post = new Post({
+      title: req.body.title,
+      content: req.body.content
+    });
+    post.save();
+    console.log(post);
+    res.status(201).json({
+      message: 'Post added successfully'
+    });
+  });
 
 module.exports = app;
