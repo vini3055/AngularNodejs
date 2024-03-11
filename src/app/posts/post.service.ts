@@ -16,6 +16,7 @@ export class PostService {
         // return [...this.Posts]
         this.http.get<{ messages: string, post: Post[] }>('http://localhost:3000/api/posts').subscribe((postData) => {
             this.Posts = postData.post;
+            console.log('check console get posts', this.Posts)
             this.postUpdated.next([...this.Posts]);
         })
     }
@@ -29,9 +30,10 @@ export class PostService {
             return alert('already existed');
         }
         const post: Post = { id: null, title: title, content: content }
-        this.http.post('http://localhost:3000/api/posts', post);
-        this.Posts.push(post);
-        this.postUpdated.next([...this.Posts]);
+        this.http.post<{ message: string }>('http://localhost:3000/api/posts', post).subscribe((responseData) => {
+            console.log(responseData.message);
+            this.Posts.push(post);
+            this.postUpdated.next([...this.Posts]);
+        });
     }
-
 }
