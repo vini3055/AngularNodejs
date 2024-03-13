@@ -10,6 +10,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit, OnDestroy {
+  deleteOnClick(PostId: string) {
+    this.postService.deletPost(PostId);
+  }
   private postSubscription = new Subscription;
   posts: Post[] = [];
 
