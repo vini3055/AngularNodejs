@@ -1,9 +1,11 @@
 <mat-toolbar color="primary">
-    <span>MyMessages</span>
+    <span routerLink="">MyMessages</span>
 
     <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" routerLink="/create"
+        routerLinkActive="mat-accent">
         <mat-icon>add</mat-icon>
     </button>
-
+    <button mat-stroked-button (click)="openSnackBar( )">Show snack-bar</button>
+    <!-- <a routerLink="/create">create</a> -->
 </mat-toolbar>
