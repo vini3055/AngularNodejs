@@ -4,7 +4,7 @@ const router = express.Router();
 
 const Post = require('../post');
 
-router.get('/api/posts',(req, res, next)=>{
+router.get('',(req, res, next)=>{
     // to get all the details from the db
         Post.find().then((document)=>{
           console.log('values from db ', document)
@@ -16,7 +16,7 @@ router.get('/api/posts',(req, res, next)=>{
   })
   
   // posting the content for the api
-  router.post("/api/posts", (req, res, next) => {
+  router.post("", (req, res, next) => {
   // in order to post a new content inside the mongodb
       const post = new Post({
         title: req.body.title,
@@ -29,14 +29,14 @@ router.get('/api/posts',(req, res, next)=>{
       });
     });
   
-    router.delete("/api/posts/:id",(req, res, next)=>{
+    router.delete("/:id",(req, res, next)=>{
       // delet the value based on the id
       Post.deleteOne({_id:req.params.id}).then(()=>{
       })
       res.status(200).json({message:'Post Deleted'})
     })
   
-  router.put("/api/posts/:id", (req,res,next)=>{
+  router.put("/:id", (req,res,next)=>{
     // update a specific card based on id
     const post = new Post({
       _id:req.params.id,
@@ -51,7 +51,7 @@ router.get('/api/posts',(req, res, next)=>{
   })
   
   
-  router.get("/api/posts/:id",(req,res,next)=>{
+  router.get("/:id",(req,res,next)=>{
     // fetching data based on the specific id
     Post.findById(req.params.id).then(post=>{
       if(post){

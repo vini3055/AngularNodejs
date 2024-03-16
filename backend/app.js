@@ -2,8 +2,7 @@ const express =require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-
-
+// all the apis /api/posts containing end points are saved in this path as postsRoutes
 const postsRoutes = require('./models/routes/posts')
 
 const app = express();
@@ -23,7 +22,7 @@ app.use((req,res,next)=>{
 })
 
 // added the apis in different folder for the better structure
-app.use(postsRoutes);
-
+// added api at the begining so that we can seperate end points with same at app.js itself
+app.use('/api/posts',postsRoutes);
 
 module.exports = app;
