@@ -1,7 +1,7 @@
 export interface Post {
-    id: string | null;
-    title: string;
-    content: string;
+    id?: string | null;
+    title?: string;
+    content?: string;
 }
 
 export interface User {

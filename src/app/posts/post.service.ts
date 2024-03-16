@@ -2,12 +2,15 @@ import { Injectable } from "@angular/core";
 import { Post } from "./post.model";
 import { Subject, map } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { Router } from "@angular/router";
 
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
+    DOMAIN = 'http://localhost:3000';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private route: Router) { }
+
     private Posts: Post[] = [];
 
     private postUpdated = new Subject<Post[]>();
@@ -37,14 +40,15 @@ export class PostService {
     }
     addPosts(title: string, content: string) {
         // checks if the content / title is same or not
-        if (this.Posts.find((x) => x.title == title || x.content == content)) {
-            return alert('already existed');
-        }
+        // if (this.Posts.find((x) => x.title == title || x.content == content)) {
+        //     return alert('already existed');
+        // }
         const post: Post = { id: null, title: title, content: content }
         this.http.post<{ message: string }>('http://localhost:3000/api/posts', post).subscribe((responseData) => {
             console.log(responseData.message);
             this.Posts.push(post);
             this.postUpdated.next([...this.Posts]);
+            this.route.navigateByUrl("")
         });
     }
     deletPost(id: string) {
@@ -63,4 +67,12 @@ export class PostService {
 
     }
 
+
+    updatePost(id: string, title: string, content: string) {
+        const post: Post = { id: id, title: title, content: content }
+        console.log('post update service')
+        this.http.put('http://localhost:3000/api/posts/' + id, post).subscribe(response => console.log('updatePost response Angular ', response));
+        this.route.navigateByUrl("")
+
+    }
 }
