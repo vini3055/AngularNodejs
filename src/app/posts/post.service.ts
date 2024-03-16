@@ -17,7 +17,7 @@ export class PostService {
 
     getPosts() {
         // return [...this.Posts]
-        this.http.get<{ messages: string, post: any[] }>('http://localhost:3000/api/posts')
+        this.http.get<{ messages: string, post: any[] }>(this.DOMAIN + '/api/posts')
             .pipe(map((postdata) => {
                 return postdata.post.map((posts) => {
                     return {
@@ -44,7 +44,7 @@ export class PostService {
         //     return alert('already existed');
         // }
         const post: Post = { id: null, title: title, content: content }
-        this.http.post<{ message: string }>('http://localhost:3000/api/posts', post).subscribe((responseData) => {
+        this.http.post<{ message: string }>(this.DOMAIN + '/api/posts', post).subscribe((responseData) => {
             console.log(responseData.message);
             this.Posts.push(post);
             this.postUpdated.next([...this.Posts]);
@@ -52,7 +52,7 @@ export class PostService {
         });
     }
     deletPost(id: string) {
-        this.http.delete('http://localhost:3000/api/posts/' + id).subscribe(() => {
+        this.http.delete(this.DOMAIN + '/api/posts/' + id).subscribe(() => {
             console.log('Post deleted successfully');
             const updatedPosts = this.Posts.filter((item) => item.id !== id)
             // console.log(' after post deleted', )
@@ -60,10 +60,10 @@ export class PostService {
             this.postUpdated.next([...this.Posts])
         })
     }
-
+    // get details of that particular card once we choose to edit
     getPost(postId: string) {
-        console.log({ ...this.Posts.find(id => id.id == postId) })
-        return { ...this.Posts.find(id => id.id == postId) }
+
+        return this.http.get<{ _id: string, title: string, content: string }>(this.DOMAIN + '/api/posts/' + postId)
 
     }
 
@@ -71,7 +71,8 @@ export class PostService {
     updatePost(id: string, title: string, content: string) {
         const post: Post = { id: id, title: title, content: content }
         console.log('post update service')
-        this.http.put('http://localhost:3000/api/posts/' + id, post).subscribe(response => console.log('updatePost response Angular ', response));
+        this.http.put(this.DOMAIN + '/api/posts/' + id, post)
+            .subscribe(response => console.log('updatePost response Angular ', response));
         this.route.navigateByUrl("")
 
     }
