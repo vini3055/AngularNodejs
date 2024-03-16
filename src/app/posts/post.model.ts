@@ -3,3 +3,7 @@ export interface Post {
     title: string;
     content: string;
 }
+
+export interface User {
+    name: string;
+}
