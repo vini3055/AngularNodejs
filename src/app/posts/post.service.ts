@@ -16,7 +16,7 @@ export class PostService {
     private postUpdated = new Subject<Post[]>();
 
     getPosts() {
-        // return [...this.Posts]
+        // getting all datas from the Database in the home screen
         this.http.get<{ messages: string, post: any[] }>(this.DOMAIN + '/api/posts')
             .pipe(map((postdata) => {
                 return postdata.post.map((posts) => {
@@ -27,7 +27,6 @@ export class PostService {
                     }
                 })
             }))
-
             .subscribe((postData) => {
                 this.Posts = postData;
                 console.log('check console get posts', this.Posts)
@@ -36,13 +35,10 @@ export class PostService {
     }
 
     getPostUpdateListner() {
+        // added on the lists 
         return this.postUpdated.asObservable();
     }
     addPosts(title: string, content: string) {
-        // checks if the content / title is same or not
-        // if (this.Posts.find((x) => x.title == title || x.content == content)) {
-        //     return alert('already existed');
-        // }
         const post: Post = { id: null, title: title, content: content }
         this.http.post<{ message: string }>(this.DOMAIN + '/api/posts', post).subscribe((responseData) => {
             console.log(responseData.message);
@@ -62,18 +58,13 @@ export class PostService {
     }
     // get details of that particular card once we choose to edit
     getPost(postId: string) {
-
         return this.http.get<{ _id: string, title: string, content: string }>(this.DOMAIN + '/api/posts/' + postId)
-
     }
-
-
     updatePost(id: string, title: string, content: string) {
         const post: Post = { id: id, title: title, content: content }
         console.log('post update service')
         this.http.put(this.DOMAIN + '/api/posts/' + id, post)
             .subscribe(response => console.log('updatePost response Angular ', response));
         this.route.navigateByUrl("")
-
     }
 }
