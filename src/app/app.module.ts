@@ -16,18 +16,22 @@ import { HeaderComponent } from './header/header.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { HttpClientModule } from '@angular/common/http';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     PostCreateComponent,
+    // header component
     HeaderComponent,
+    // post list component 
     PostListComponent,
   ],
   imports: [
     BrowserModule,
-    // AppRoutingModule,
+    AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
     MatInputModule,
@@ -35,12 +39,19 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
-    MatExpansionModule
+    MatExpansionModule,
+    //module to add api integrations
+    HttpClientModule,
+    // for snackbar module need to be imported
+    MatSnackBarModule,
 
 
 
   ],
-  providers: [],
+  providers: [
+    // snackbar time duration
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
