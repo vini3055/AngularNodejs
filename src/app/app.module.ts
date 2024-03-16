@@ -18,6 +18,7 @@ import { PostListComponent } from './posts/post-list/post-list.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -44,6 +45,8 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/mater
     HttpClientModule,
     // for snackbar module need to be imported
     MatSnackBarModule,
+    // to import spinner for loading purpose
+    MatProgressSpinnerModule
 
 
 

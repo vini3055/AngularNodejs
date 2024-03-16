@@ -19,23 +19,30 @@ export class PostCreateComponent implements OnInit {
   mode = 'create';
   post: Post;
   postId: string;
+  Loading: boolean = true;
 
   constructor(public postService: PostService, private route: ActivatedRoute) { }
   ngOnInit() {
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      console.log('parammap', paramMap)
-      if (paramMap['has']('postId')) {
-        this.mode = 'edit';
-        this.postId = paramMap['get']('postId');
-        this.postService.getPost(this.postId).subscribe((value) => {
-          console.log('get valuess', value)
-          this.post = { id: value._id, title: value.title, content: value.content }
-        })
-      } else {
-        this.mode = 'create'
-        this.postId = null;
-      }
-    })
+    this.Loading = true;
+    setTimeout(() => {
+      this.route.paramMap.subscribe((paramMap: ParamMap) => {
+        this.Loading = false;
+        console.log('parammap', paramMap)
+        if (paramMap['has']('postId')) {
+          this.mode = 'edit';
+          this.postId = paramMap['get']('postId');
+          this.postService.getPost(this.postId).subscribe((value) => {
+            console.log('get valuess', value)
+            this.post = { id: value._id, title: value.title, content: value.content }
+          })
+        } else {
+          this.mode = 'create'
+          this.postId = null;
+        }
+      })
+    }, 500);
+
+
   }
 
 
