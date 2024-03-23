@@ -65,6 +65,7 @@ export class PostService {
         console.log('post update service')
         this.http.put(this.DOMAIN + '/api/posts/' + id, post)
             .subscribe(response => console.log('updatePost response Angular ', response));
+        this.getPosts();
         this.route.navigateByUrl("")
     }
 }
